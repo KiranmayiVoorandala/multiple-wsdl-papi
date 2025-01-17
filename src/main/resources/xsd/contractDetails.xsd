@@ -1,0 +1,81 @@
+<xs:schema targetNamespace="http://www.ipas.com/contractDetails" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ipas.com/contractDetails">
+<xs:element name="contractDetailsRequest">
+<xs:complexType>
+   <xs:sequence>
+      <xs:element name="contractDetails" type="tns:contractDetailsRequestType" minOccurs="1" maxOccurs="1"/>
+   </xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="contractDetailsResponse">
+<xs:complexType>
+   <xs:sequence>
+      <xs:element name="contractDetails" type="tns:contractDetailsResponseType" minOccurs="0" maxOccurs="unbounded"/>
+   </xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="contractDetailsRequestType">
+	<xs:sequence>
+	<xs:element type="xs:string" name="contractNumber"/>
+	<xs:element type="xs:string" name="statutoryCompany"/>
+	</xs:sequence>
+</xs:complexType>
+<xs:complexType name="contractDetailsResponseType">
+	<xs:sequence>
+	<xs:element type="xs:string" name="businessEffectiveDate"/>
+	<xs:element type="xs:string" name="contractNumber"/>
+	<xs:element type="xs:string" name="adminSystemCode"/>
+	<xs:element type="xs:string" name="SBUID"/>
+	<xs:element type="xs:string" name="contractIssueDate"/>
+	<xs:element type="xs:string" name="contractStatusCode"/>
+	<xs:element type="xs:string" name="freeLookStatus"/>
+	<xs:element type="xs:string" name="contractStatusValue"/>
+	<xs:element type="xs:string" name="billToDate"/>
+	<xs:element type="xs:string" name="freeLookDate"/>
+	<xs:element type="xs:string" name="issuedAge"/>
+	<xs:element type="xs:string" name="schedulePremium"/>
+	<xs:element type="xs:string" name="modalPremium"/>
+	<xs:element type="xs:string" name="paidToDate"/>
+	<xs:element type="xs:string" name="paymentMethod"/>
+	<xs:element type="xs:string" name="paymentCode"/>
+	<xs:element type="xs:string" name="contractEffectiveDate"/>
+	<xs:element type="xs:string" name="cotractDuration"/>
+	<xs:element type="xs:string" name="servicingCompany"/>
+	<xs:element type="xs:string" name="writingCompany"/>
+	<xs:element type="xs:string" name="lastPremiumReceivedDate"/>
+	<xs:element type="xs:string" name="productType"/>
+	<xs:element type="xs:string" name="currentFaceAmount"/>
+	<xs:element type="xs:string" name="flatExtraPremium"/>
+	<xs:element type="xs:string" name="flatExtraDuration"/>
+	<xs:element type="xs:string" name="faceAmount"/>
+	<xs:element type="xs:string" name="flatExtraAnnualPremium"/>
+	<xs:element type="xs:string" name="combFlatExtraPremium"/>
+	<xs:element type="xs:string" name="permanentFlatExtraEnd"/>
+	<xs:element type="xs:string" name="temporaryFlatExtraEnd"/>
+	<xs:element type="xs:string" name="rating"/>
+	<xs:element type="xs:string" name="ratingDuration"/>
+	<xs:element type="xs:string" name="lastPaymentAmount"/>
+	<xs:element type="xs:string" name="interestEffectiveDate"/>
+	<xs:element type="xs:string" name="productName"/>
+	<xs:element type="xs:string" name="irrevocableIndicator"/>
+	<xs:element type="xs:string" name="assigneeIndicator"/>
+	<xs:element type="xs:string" name="groupBillNumber"/>
+	<xs:element type="xs:string" name="totalAnnualPremium"/>
+	<xs:element type="xs:string" name="lapseAmountDue"/>
+	<xs:element type="xs:string" name="projectedLapseDate"/>
+	<xs:element type="xs:string" name="riderPremiumClass"/>
+	<xs:element type="xs:string" name="premiumClass"/>
+	<xs:element type="xs:string" name="restrictionCode"/>
+	<xs:element type="xs:string" name="accumualtedAmount"/>
+	<xs:element type="xs:string" name="surrenderAmount"/>
+	<xs:element type="xs:string" name="currentLoanAmount"/>
+	<xs:element type="xs:string" name="maximumLoanAmount"/>
+	<xs:element type="xs:string" name="loanPayoffAmount"/>
+	<xs:element type="xs:string" name="loanInterestBillType"/>
+	<xs:element type="xs:string" name="loanInterestBillToDate"/>
+	<xs:element type="xs:string" name="loanInterestPaidToDate"/>
+	<xs:element type="xs:string" name="loanInterestPaymentAmount"/>
+	<xs:element type="xs:string" name="loanInterestRateCharged"/>
+	<xs:element type="xs:string" name="conversionExpiryDate"/>
+	</xs:sequence>
+</xs:complexType>
+</xs:schema>

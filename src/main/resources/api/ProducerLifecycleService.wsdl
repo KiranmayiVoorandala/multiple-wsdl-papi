@@ -1,0 +1,381 @@
+<wsdl:definitions name="ProducerLifecycleService" targetNamespace="http://sdb.sircon.com/webservice/2006/06/ProducerLifecycleService" xmlns:cmn="http://px.sircon.com/schemas/2006/06/Transaction.xsd" xmlns:cmnhdr="http://www.sircon.com/WebServices/services/CommonHeaders.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://sdb.sircon.com/webservice/2006/06/ProducerLifecycleService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <wsdl:types>
+      <xsd:schema targetNamespace="http://sdb.sircon.com/webservice/2006/06/ProducerLifecycleService">
+         <xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" schemaLocation="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+         <xsd:import namespace="http://px.sircon.com/schemas/2006/06/Transaction.xsd" schemaLocation="https://sdbuat.sircon.com/webservice/v200606/Transaction.xsd"/>
+         <xsd:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"/>
+         <xsd:import namespace="http://www.sircon.com/WebServices/services/CommonHeaders.xsd" schemaLocation="https://sdbuat.sircon.com/webservice/CommonHeaders.xsd"/>
+         <xsd:simpleType name="VersionType">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="1.0"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:element name="Version" type="tns:VersionType"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="RelationshipCriteria">
+      <wsdl:part element="cmn:RelationshipCriteria" name="RelationshipCriteria"/>
+      <wsdl:part element="wsse:Security" name="Security"/>
+      <wsdl:part element="tns:Version" name="Version"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+   </wsdl:message>
+   <wsdl:message name="CreateRelationshipResponse">
+      <wsdl:part element="cmn:RelationshipResponse" name="CreateRelationshipResponse"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+   </wsdl:message>
+   <wsdl:message name="InactivateRelationshipResponse">
+      <wsdl:part element="cmn:RelationshipResponse" name="InactivateRelationshipResponse"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+   </wsdl:message>
+   <wsdl:message name="RetrieveRelationshipResponse">
+      <wsdl:part element="cmn:RetrieveRelationshipsResponse" name="RetrieveRelationshipResponse"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+   </wsdl:message>
+   <wsdl:message name="NewProducerResponse">
+      <wsdl:part element="cmn:TransactionResponses" name="NewProducerResponse"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+   </wsdl:message>
+   <wsdl:message name="NewProducerRequest">
+      <wsdl:part element="cmn:Transactions" name="NewProducerRequest"/>
+      <wsdl:part element="wsse:Security" name="Security"/>
+      <wsdl:part element="tns:Version" name="Version"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+   </wsdl:message>
+   <wsdl:message name="ProducerQueryResponse">
+      <wsdl:part element="cmn:ProducerQueryResponse" name="ProducerQueryResponse"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+   </wsdl:message>
+   <wsdl:message name="ProducerQueryRequest">
+      <wsdl:part element="cmn:ProducerQuery" name="ProducerQueryRequest"/>
+      <wsdl:part element="wsse:Security" name="Security"/>
+      <wsdl:part element="tns:Version" name="Version"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+   </wsdl:message>
+   <wsdl:message name="AvailableAppointmentProfilesRequest">
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmn:AvailableAppointmentProfilesRequest" name="AvailableAppointmentProfilesRequest"/>
+   </wsdl:message>
+   <wsdl:message name="AppointmentProfilesResponse">
+      <wsdl:part element="cmn:AppointmentProfilesResponse" name="AppointmentProfilesResponse"/>
+   </wsdl:message>
+   <wsdl:message name="BuildPotentialAppointmentsRequest">
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmnhdr:UserName" name="UserName"/>
+      <wsdl:part element="cmn:BuildPotentialAppointmentsRequest" name="BuildPotentialAppointmentsRequest"/>
+   </wsdl:message>
+   <wsdl:message name="PotentialAppointmentsResponse">
+      <wsdl:part element="cmn:PotentialAppointmentsResponse" name="PotentialAppointmentsResponse"/>
+   </wsdl:message>
+   <wsdl:message name="RequestStatusNotificationRequest">
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmnhdr:UserName" name="UserName"/>
+      <wsdl:part element="cmn:RequestStatusNotificationRequest" name="RequestStatusNotificationRequest"/>
+   </wsdl:message>
+   <wsdl:message name="RequestStatusNotificationResponse">
+      <wsdl:part element="cmn:RequestStatusNotificationResponse" name="RequestStatusNotificationResponse"/>
+   </wsdl:message>
+   <wsdl:message name="BuildPotentialTerminationsRequest">
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmnhdr:UserName" name="UserName"/>
+      <wsdl:part element="cmn:BuildPotentialTerminationsRequest" name="BuildPotentialTerminationsRequest"/>
+   </wsdl:message>
+   <wsdl:message name="PotentialTerminationsResponse">
+      <wsdl:part element="cmn:PotentialTerminationsResponse" name="PotentialTerminationsResponse"/>
+   </wsdl:message>
+   <wsdl:message name="SubmitAppointmentsRequest">
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmnhdr:UserName" name="UserName"/>
+      <wsdl:part element="cmnhdr:ProducerRequestId" name="ProducerRequestId"/>
+      <wsdl:part element="cmn:SubmitAppointmentsRequest" name="SubmitAppointmentsRequest"/>
+   </wsdl:message>
+   <wsdl:message name="SubmitAppointmentsResponse">
+      <wsdl:part element="cmn:SentAppointmentsResponse" name="SubmitAppointmentsResponse"/>
+   </wsdl:message>
+   <wsdl:message name="UpdateProducerRecordRequest">
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmnhdr:UserName" name="UserName"/>
+      <wsdl:part element="cmn:UpdateProducerRecordRequest" name="UpdateProducerRecordRequest"/>
+   </wsdl:message>
+   <wsdl:message name="UpdateProducerRecordResponse">
+      <wsdl:part element="cmn:UpdateProducerRecordResponse" name="UpdateProducerRecordResponse"/>
+   </wsdl:message>
+   <wsdl:message name="HierarchyTemplateRequest">
+      <wsdl:part element="wsse:Security" name="Security"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmn:HierarchyTemplateRequest" name="HierarchyTemplateRequest"/>
+   </wsdl:message>
+   <wsdl:message name="SelectHierarchyTemplateResponse">
+      <wsdl:part element="cmn:HierarchyTemplateResponse" name="SelectHierarchyTemplateResponse"/>
+   </wsdl:message>
+   <wsdl:message name="SelectLooseHierarchyTemplateResponse">
+      <wsdl:part element="cmn:HierarchyTemplateResponse" name="SelectLooseHierarchyTemplateResponse"/>
+   </wsdl:message>
+   <wsdl:message name="ValidateHierarchyTemplateResponse">
+      <wsdl:part element="cmn:HierarchyTemplateResponse" name="ValidateHierarchyTemplateResponse"/>
+   </wsdl:message>
+   <wsdl:message name="CreateAgreementResponse">
+      <wsdl:part element="cmn:HierarchyTemplateResponse" name="CreateAgreementResponse"/>
+   </wsdl:message>
+   <wsdl:message name="InactivateLicenseStateRequest">
+      <wsdl:part element="wsse:Security" name="Security"/>
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmn:InactivateLicenseStateRequest" name="InactivateLicenseStateRequest"/>
+   </wsdl:message>
+   <wsdl:message name="InactivateLicenseStateResponse">
+      <wsdl:part element="cmnhdr:SubscriberId" name="SubscriberId"/>
+      <wsdl:part element="cmn:InactivateLicenseStateResponse" name="InactivateLicenseStateResponse"/>
+   </wsdl:message>
+   <wsdl:portType name="ProducerLifecycleServicePortType">
+      <wsdl:operation name="availableAppointmentProfiles">
+         <wsdl:input message="tns:AvailableAppointmentProfilesRequest"/>
+         <wsdl:output message="tns:AppointmentProfilesResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="buildPotentialAppointments">
+         <wsdl:input message="tns:BuildPotentialAppointmentsRequest"/>
+         <wsdl:output message="tns:PotentialAppointmentsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="requestStatusNotification">
+         <wsdl:input message="tns:RequestStatusNotificationRequest"/>
+         <wsdl:output message="tns:RequestStatusNotificationResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="buildPotentialTerminations">
+         <wsdl:input message="tns:BuildPotentialTerminationsRequest"/>
+         <wsdl:output message="tns:PotentialTerminationsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="createAgreement">
+         <wsdl:input message="tns:HierarchyTemplateRequest"/>
+         <wsdl:output message="tns:CreateAgreementResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="createRelationship">
+         <wsdl:input message="tns:RelationshipCriteria"/>
+         <wsdl:output message="tns:CreateRelationshipResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="inactivateLicenseState">
+         <wsdl:input message="tns:InactivateLicenseStateRequest"/>
+         <wsdl:output message="tns:InactivateLicenseStateResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="inactivateRelationship">
+         <wsdl:input message="tns:RelationshipCriteria"/>
+         <wsdl:output message="tns:InactivateRelationshipResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="newProducer">
+         <wsdl:input message="tns:NewProducerRequest"/>
+         <wsdl:output message="tns:NewProducerResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="producerQuery">
+         <wsdl:input message="tns:ProducerQueryRequest"/>
+         <wsdl:output message="tns:ProducerQueryResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="retrieveRelationship">
+         <wsdl:input message="tns:RelationshipCriteria"/>
+         <wsdl:output message="tns:RetrieveRelationshipResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="selectHierarchyTemplate">
+         <wsdl:input message="tns:HierarchyTemplateRequest"/>
+         <wsdl:output message="tns:SelectHierarchyTemplateResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="selectLooseHierarchyTemplate">
+         <wsdl:input message="tns:HierarchyTemplateRequest"/>
+         <wsdl:output message="tns:SelectLooseHierarchyTemplateResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="submitAppointments">
+         <wsdl:input message="tns:SubmitAppointmentsRequest"/>
+         <wsdl:output message="tns:SubmitAppointmentsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateProducerRecord">
+         <wsdl:input message="tns:UpdateProducerRecordRequest"/>
+         <wsdl:output message="tns:UpdateProducerRecordResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="validateHierarchyTemplate">
+         <wsdl:input message="tns:HierarchyTemplateRequest"/>
+         <wsdl:output message="tns:ValidateHierarchyTemplateResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="ProducerLifecycleServiceBinding" type="tns:ProducerLifecycleServicePortType">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="availableAppointmentProfiles">
+         <soap:operation soapAction="availableAppointmentProfiles"/>
+         <wsdl:input>
+            <soap:body parts="AvailableAppointmentProfilesRequest" use="literal"/>
+            <soap:header message="tns:AvailableAppointmentProfilesRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="AppointmentProfilesResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="buildPotentialAppointments">
+         <soap:operation soapAction="buildPotentialAppointments"/>
+         <wsdl:input>
+            <soap:body parts="BuildPotentialAppointmentsRequest" use="literal"/>
+            <soap:header message="tns:BuildPotentialAppointmentsRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="PotentialAppointmentsResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="requestStatusNotification">
+         <soap:operation soapAction="requestStatusNotification"/>
+         <wsdl:input>
+            <soap:body parts="RequestStatusNotificationRequest" use="literal"/>
+            <soap:header message="tns:RequestStatusNotificationRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="RequestStatusNotificationResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="buildPotentialTerminations">
+         <soap:operation soapAction="buildPotentialTerminations"/>
+         <wsdl:input>
+            <soap:body parts="BuildPotentialTerminationsRequest" use="literal"/>
+            <soap:header message="tns:BuildPotentialTerminationsRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="PotentialTerminationsResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="createAgreement">
+         <soap:operation soapAction="createAgreement"/>
+         <wsdl:input>
+            <soap:body parts="HierarchyTemplateRequest" use="literal"/>
+            <soap:header message="tns:HierarchyTemplateRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="CreateAgreementResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="createRelationship">
+         <soap:operation soapAction="createRelationship"/>
+         <wsdl:input>
+            <soap:body parts="RelationshipCriteria" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="Security" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="Version" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="CreateRelationshipResponse" use="literal"/>
+            <soap:header message="tns:CreateRelationshipResponse" part="SubscriberId" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="inactivateLicenseState">
+         <soap:operation soapAction="inactivateLicenseState"/>
+         <wsdl:input>
+            <soap:body parts="InactivateLicenseStateRequest" use="literal"/>
+            <soap:header message="tns:InactivateLicenseStateRequest" part="Security" use="literal"/>
+            <soap:header message="tns:InactivateLicenseStateRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="InactivateLicenseStateResponse" use="literal"/>
+            <soap:header message="tns:InactivateLicenseStateResponse" part="SubscriberId" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="inactivateRelationship">
+         <soap:operation soapAction="inactivateRelationship"/>
+         <wsdl:input>
+            <soap:body parts="RelationshipCriteria" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="Security" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="Version" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="InactivateRelationshipResponse" use="literal"/>
+            <soap:header message="tns:InactivateRelationshipResponse" part="SubscriberId" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="newProducer">
+         <soap:operation soapAction="newProducer"/>
+         <wsdl:input>
+            <soap:body parts="NewProducerRequest" use="literal"/>
+            <soap:header message="tns:NewProducerRequest" part="Security" use="literal"/>
+            <soap:header message="tns:NewProducerRequest" part="Version" use="literal"/>
+            <soap:header message="tns:NewProducerRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="NewProducerResponse" use="literal"/>
+            <soap:header message="tns:NewProducerResponse" part="SubscriberId" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="producerQuery">
+         <soap:operation soapAction="producerQuery"/>
+         <wsdl:input>
+            <soap:body parts="ProducerQueryRequest" use="literal"/>
+            <soap:header message="tns:ProducerQueryRequest" part="Security" use="literal"/>
+            <soap:header message="tns:ProducerQueryRequest" part="Version" use="literal"/>
+            <soap:header message="tns:ProducerQueryRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="ProducerQueryResponse" use="literal"/>
+            <soap:header message="tns:ProducerQueryResponse" part="SubscriberId" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="retrieveRelationship">
+         <soap:operation soapAction="retrieveRelationship"/>
+         <wsdl:input>
+            <soap:body parts="RelationshipCriteria" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="Security" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="Version" use="literal"/>
+            <soap:header message="tns:RelationshipCriteria" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="RetrieveRelationshipResponse" use="literal"/>
+            <soap:header message="tns:RetrieveRelationshipResponse" part="SubscriberId" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="selectHierarchyTemplate">
+         <soap:operation soapAction="selectHierarchyTemplate"/>
+         <wsdl:input>
+            <soap:body parts="HierarchyTemplateRequest" use="literal"/>
+            <soap:header message="tns:HierarchyTemplateRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="SelectHierarchyTemplateResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="selectLooseHierarchyTemplate">
+         <soap:operation soapAction="selectLooseHierarchyTemplate"/>
+         <wsdl:input>
+            <soap:body parts="HierarchyTemplateRequest" use="literal"/>
+            <soap:header message="tns:HierarchyTemplateRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="SelectLooseHierarchyTemplateResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="submitAppointments">
+         <soap:operation soapAction="submitAppointments"/>
+         <wsdl:input>
+            <soap:body parts="SubmitAppointmentsRequest" use="literal"/>
+            <soap:header message="tns:SubmitAppointmentsRequest" part="SubscriberId" use="literal"/>
+            <soap:header message="tns:SubmitAppointmentsRequest" part="ProducerRequestId" use="literal"/>
+            <soap:header message="tns:SubmitAppointmentsRequest" part="UserName" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="SubmitAppointmentsResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateProducerRecord">
+         <soap:operation soapAction="updateProducerRecord"/>
+         <wsdl:input>
+            <soap:body parts="UpdateProducerRecordRequest" use="literal"/>
+            <soap:header message="tns:UpdateProducerRecordRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="UpdateProducerRecordResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="validateHierarchyTemplate">
+         <soap:operation soapAction="validateHierarchyTemplate"/>
+         <wsdl:input>
+            <soap:body parts="HierarchyTemplateRequest" use="literal"/>
+            <soap:header message="tns:HierarchyTemplateRequest" part="SubscriberId" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body parts="ValidateHierarchyTemplateResponse" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="ProducerLifecycleService">
+      <wsdl:port binding="tns:ProducerLifecycleServiceBinding" name="ProducerLifecycleServicePort">
+         <soap:address location="https://sdbuat.sircon.com/webservice/services/2006/06/ProducerLifecycleService"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

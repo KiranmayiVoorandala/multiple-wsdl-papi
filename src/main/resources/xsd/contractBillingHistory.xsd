@@ -1,0 +1,31 @@
+<xs:schema targetNamespace="http://www.ipas.com/contractBillingHistory" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ipas.com/contractBillingHistory">
+     <xs:element name="contractBillingHistoryRequest">
+        <xs:complexType>
+           <xs:sequence>
+              <xs:element name="contractBillingHistory" type="tns:contractBillingHistoryRequestType" minOccurs="1" maxOccurs="1"/>
+           </xs:sequence>
+        </xs:complexType>
+     </xs:element>
+     <xs:element name="contractBillingHistoryResponse">
+        <xs:complexType>
+           <xs:sequence>
+              <xs:element name="contractBillingHistory" type="tns:contractBillingHistoryResponsetype" minOccurs="0" maxOccurs="unbounded"/>
+           </xs:sequence>
+        </xs:complexType>
+   </xs:element>
+    <xs:complexType name="contractBillingHistoryRequestType">
+      <xs:sequence>
+        <xs:element type="xs:string" name="contractNumber"/>
+        <xs:element type="xs:string" name="statutoryCompany"/>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="contractBillingHistoryResponsetype">
+      <xs:sequence>
+	<xs:element type="xs:string" name="businessEffectiveDate"/>
+	<xs:element type="xs:string" name="lastBillingDate"/>
+	<xs:element type="xs:string" name="billingType"/>
+	<xs:element type="xs:string" name="billingAmount"/>
+	<xs:element type="xs:string" name="billingDueDate"/>
+      </xs:sequence>
+    </xs:complexType>
+ </xs:schema>

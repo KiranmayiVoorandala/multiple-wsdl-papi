@@ -1,0 +1,109 @@
+<wsdl:definitions name="Contract" targetNamespace="http://www.ipas.com/Contract/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+				  xmlns:tns="http://www.ipas.com/Contract/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+                  xmlns:riders="http://www.ipas.com/contractRiders"
+                  xmlns:bill="http://www.ipas.com/contractBillingHistory"
+                  xmlns:det="http://www.ipas.com/contractDetails"
+				  xmlns:role="http://www.ipas.com/contractRoles">
+   <wsdl:types>
+      <xsd:schema targetNamespace="http://www.ipas.com/Contract/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+				  xmlns:tns="http://www.ipas.com/Contract/" 
+				  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+				  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <!--CONTARCT RIDER-->
+         <xsd:import namespace="http://www.ipas.com/contractRiders" schemaLocation="../xsd/contractRiders.xsd"/>
+         <!--CONTRACT BILLING HISTORY-->
+		 <xsd:import namespace="http://www.ipas.com/contractBillingHistory" schemaLocation="../xsd/contractBillingHistory.xsd"/>
+         <!--CONTRACT DETAILS-->
+		 <xsd:import namespace="http://www.ipas.com/contractDetails" schemaLocation="../xsd/contractDetails.xsd"/>
+         <!--CONTRACT ROLES-->
+		 <xsd:import namespace="http://www.ipas.com/contractRoles" schemaLocation="../xsd/contractRoles.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="getContractBillingHistoryRequest">
+      <wsdl:part element="bill:contractBillingHistoryRequest" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="getContractBillingHistoryResponse">
+      <wsdl:part element="bill:contractBillingHistoryResponse" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="getContractDetailsRequest">
+      <wsdl:part element="det:contractDetailsRequest" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="getContractDetailsResponse">
+      <wsdl:part element="det:contractDetailsResponse" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="getContractRolesRequest">
+      <wsdl:part element="role:contractRolesRequest" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="getContractRolesResponse">
+      <wsdl:part element="role:contractRolesResponse" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="getContractRidersRequest">
+      <wsdl:part element="riders:contractRidersRequest" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="getContractRidersResponse">
+      <wsdl:part element="riders:contractRidersResponse" name="parameters"/>
+   </wsdl:message>
+   <wsdl:portType name="Contract">
+      <wsdl:operation name="getContractBillingHistory">
+         <wsdl:input message="tns:getContractBillingHistoryRequest"/>
+         <wsdl:output message="tns:getContractBillingHistoryResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContractDetails">
+         <wsdl:input message="tns:getContractDetailsRequest"/>
+         <wsdl:output message="tns:getContractDetailsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContractRoles">
+         <wsdl:input message="tns:getContractRolesRequest"/>
+         <wsdl:output message="tns:getContractRolesResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContractRiders">
+         <wsdl:input message="tns:getContractRidersRequest"/>
+         <wsdl:output message="tns:getContractRidersResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="ContractSOAP" type="tns:Contract">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getContractBillingHistory">
+         <soap:operation soapAction="http://www.ipas.com/Contract/getContractBillingHistory"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContractDetails">
+         <soap:operation soapAction="http://www.ipas.com/Contract/getContractDetails"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContractRoles">
+         <soap:operation soapAction="http://www.ipas.com/Contract/getContractRoles"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContractRiders">
+         <soap:operation soapAction="http://www.ipas.com/Contract/getContractRiders"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="ContractSOAPQSService">
+      <wsdl:documentation>OSB Service</wsdl:documentation>
+      <wsdl:port binding="tns:ContractSOAP" name="ContractSOAPQSPort">
+         <soap:address location="http://localhost:8091/soap-api/Contract"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

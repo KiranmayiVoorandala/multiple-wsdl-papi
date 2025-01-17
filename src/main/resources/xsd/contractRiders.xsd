@@ -1,0 +1,43 @@
+<xs:schema targetNamespace="http://www.ipas.com/contractRiders" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ipas.com/contractRiders">
+<xs:element name="contractRidersRequest">
+<xs:complexType>
+   <xs:sequence>
+      <xs:element name="contractRiders" type="tns:contractRidersRequestType" minOccurs="1" maxOccurs="1"/>
+   </xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="contractRidersResponse">
+<xs:complexType>
+   <xs:sequence>
+      <xs:element name="contractRiders" type="tns:contractRidersResponseType" minOccurs="0" maxOccurs="unbounded"/>
+   </xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="contractRidersRequestType">
+	<xs:sequence>
+	<xs:element type="xs:string" name="contractNumber"/>
+	<xs:element type="xs:string" name="statutoryCompany"/>
+	</xs:sequence>
+</xs:complexType>
+<xs:complexType name="contractRidersResponseType">
+	<xs:sequence>
+	<xs:element type="xs:string" name="contractNumber"/>
+	<xs:element type="xs:string" name="adminSystemCode"/>
+	<xs:element type="xs:string" name="segmentGUID"/>
+	<xs:element type="xs:string" name="riderProductCode"/>
+	<xs:element type="xs:string" name="riderStatusCode"/>
+	<xs:element type="xs:string" name="riderProductName"/>
+	<xs:element type="xs:string" name="riderProductType"/>
+	<xs:element type="xs:string" name="recordType"/>
+	<xs:element type="xs:string" name="riderIssueAge"/>
+	<xs:element type="xs:string" name="riderFaceAmount"/>
+	<xs:element type="xs:string" name="riderEffectiveDate"/>
+	<xs:element type="xs:string" name="riderExpiryDate"/>
+	<xs:element type="xs:string" name="riderAnnualPremium"/>
+	<xs:element type="xs:string" name="riderPremiumClass"/>
+	<xs:element type="xs:string" name="riderRating"/>
+	<xs:element type="xs:string" name="premiumClass"/>
+	<xs:element type="xs:string" name="riderClientID"/>
+	</xs:sequence>
+</xs:complexType>
+</xs:schema>

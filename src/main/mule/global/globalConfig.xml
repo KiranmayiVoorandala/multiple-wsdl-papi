@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:apikit-soap="http://www.mulesoft.org/schema/mule/apikit-soap" 
+    xmlns:batch="http://www.mulesoft.org/schema/mule/ee/batch" 
+    xmlns:bti="http://www.mulesoft.org/schema/mule/ee/bti" 
+	xmlns="http://www.mulesoft.org/schema/mule/core" 
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http-policy="http://www.mulesoft.org/schema/mule/mule-http" 
+	xmlns:kryo="http://www.mulesoft.org/schema/mule/kryo" 
+	xmlns:module="http://www.mulesoft.org/schema/mule/module" 
+	xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets" 
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls" 
+	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/apikit-soap http://www.mulesoft.org/schema/mule/apikit-soap/current/mule-apikit-soap.xsd">
+	
+	<http:listener-config name="wsdl-httpListenerConfig" doc:name="HTTP Listener config" doc:id="1062f768-1eed-41db-93d0-692ced145f15" >
+		<http:listener-connection host="0.0.0.0" port="8087" />
+	</http:listener-config>
+	<http:listener-config name="api-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081"/>
+    </http:listener-config>
+    <apikit-soap:config name="soapkit-config-calculator" port="CalculatorPort" service="CalculatorService" wsdlLocation="api\calculator.wsdl"/>
+    <apikit-soap:config name="soapkit-config-helloworld" port="HelloWorldPort" service="HelloWorldService" wsdlLocation="api\helloworld.wsdl"/>
+	<apikit-soap:config name="soapkit-config-common" service="#[vars.serviceName]" port="#[vars.portName]" doc:name="APIKit for SOAP Configuration" doc:id="48b87a53-f098-4870-bb27-eb76b898d8b4" wsdlLocation="#[vars.wsdlLocation]" />
+	<global-property doc:name="Global Property" doc:id="65f8c87b-55a0-44ff-9753-0d7b09bb977c" name="mule.env" value="dev" />
+	<configuration-properties doc:name="Configuration properties" doc:id="7acf611b-1b4c-43d1-8277-c92fbf110c08" file="config/${mule.env}.properties" />
+	<apikit-soap:config name="APIKit_for_SOAP_Configuration-ref" service="HelloWorldService" port="HelloWorldPort" doc:name="APIKit for SOAP Configuration" doc:id="b3b5bd5a-325a-42c0-95ca-73a815b82022" wsdlLocation="api\helloworld.wsdl" />
+</mule>

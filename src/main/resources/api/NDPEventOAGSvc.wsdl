@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:dcc="http://reedexpo.com/IntegrationPlatform/NDP/Event/Internal/V1" xmlns:scc="http://reedexpo.com/IntegrationPlatform/NDP/Event/Internal/V1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wer="http://reedexpo.com/IntegrationPlatform/Exception/Internal/V1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="NDPEventOAGSvcWSDL" targetNamespace="http://reedexpo.com/IntegrationPlatform/NDP/Event/Internal/V1">
+	<wsdl:documentation>
+    Service: NDPEventOAGService
+    Version: 0.1
+	Business Justification: This integration is required to ensure continuity of Reedâ€™s corporate and event websites. Currently all these websites use Event Edition entities that are created in SFDC and then imported to NDP. In order to keep the most up to date Event Edition information in the NDP platform, any updates in the master data for these entities need to be synchronized in NDP.
+    Operation Names: 1) UpsertEventEdition
+  </wsdl:documentation>
+	<wsdl:types>
+		<wsdl:documentation>Schema Defination for the operations</wsdl:documentation>
+		<xs:schema xmlns:tns="http://reedexpo.com/IntegrationPlatform/NDP/Event/Internal/V1" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://reedexpo.com/IntegrationPlatform/NDP/Event/Internal/V1">
+			<xs:complexType name="MultiLanguageType">
+				<xs:sequence>
+					<xs:element name="LanguageCode" type="xs:string"/>
+					<xs:element name="Value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="MultiLanguagesType">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="MultiLanguage" type="tns:MultiLanguageType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="UpsertEventEditionRequestType">
+				<xs:sequence>
+					<xs:element name="BusinessUnit">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="BusinessUnitCode" type="xs:string"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="CorrelationId" type="xs:string"/>
+					<xs:element name="Event">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="EventCode" type="xs:string"/>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="MultiLanguage" type="tns:MultiLanguageType"/>
+								<xs:element name="EventNumericCode" type="xs:string"/>
+								<xs:element name="EventType" type="xs:string"/>
+								<xs:element name="EventIndustryCode" type="xs:string"/>
+								<xs:element name="EventFrequency" type="xs:string"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="EventEdition">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="StartDate" type="xs:date"/>
+								<xs:element name="EndDate" type="xs:date"/>
+								<xs:element name="EventEditionCode" type="xs:string"/>
+								<xs:element name="EventEditionDigitalApp" type="xs:string"/>
+								<xs:element name="DefaultCurrencyCode" type="xs:string"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="EventEditionResponseType">
+				<xs:sequence>
+					<xs:element name="Code" type="xs:string"/>
+					<xs:element name="Status" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="UpsertEventEditionRequest" type="tns:UpsertEventEditionRequestType"/>
+			<xs:element name="UpsertEventEditionResponse" type="tns:EventEditionResponseType"/>
+		</xs:schema>
+		<xs:schema xmlns:err="http://reedexpo.com/IntegrationPlatform/Exception/Internal/V1" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://reedexpo.com/IntegrationPlatform/Exception/Internal/V1">
+			<xs:element name="FaultCode" type="xs:string"/>
+			<xs:element name="FaultText" type="xs:string"/>
+			<xs:element name="HTTPStatusCode" type="xs:integer"/>
+			<xs:complexType name="FaultType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="err:HTTPStatusCode"/>
+					<xs:element minOccurs="0" ref="err:FaultCode"/>
+					<xs:element minOccurs="1" ref="err:FaultText"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="Fault" type="err:FaultType"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="UpsertEventEditionRequestMessage">
+		<wsdl:part element="dcc:UpsertEventEditionRequest" name="payload"/>
+	</wsdl:message>
+	<wsdl:message name="UpsertEventEditionResponseMessage">
+		<wsdl:part element="dcc:UpsertEventEditionResponse" name="payload"/>
+	</wsdl:message>
+	<wsdl:message name="FaultMessage">
+		<wsdl:part element="wer:Fault" name="Fault"/>
+	</wsdl:message>
+	<wsdl:portType name="NDPEventOAGSvc">
+		<wsdl:operation name="UpsertEventEdition">
+			<wsdl:input message="dcc:UpsertEventEditionRequestMessage" name="UpsertEventEditionRequest"/>
+			<wsdl:output message="dcc:UpsertEventEditionResponseMessage" name="UpsertEventEditionResponse"/>
+			<wsdl:fault message="dcc:FaultMessage" name="Fault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="NDPEventOAGSvcBinding" type="scc:NDPEventOAGSvc">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="UpsertEventEdition">
+			<soap:operation soapAction="UpsertEventEdition" style="document"/>
+			<wsdl:input name="UpsertEventEditionRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="UpsertEventEditionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="Fault">
+				<soap:fault name="Fault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="NDPEventOAGSvc">
+		<wsdl:port binding="scc:NDPEventOAGSvcBinding" name="NDPEventOAGSvcBindingPort">
+			<soap:address location="http://rxfmwd01a1.hclcloud.com:6050/NDPEventOAGSvc"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

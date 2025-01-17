@@ -1,0 +1,40 @@
+<xs:schema targetNamespace="http://www.ipas.com/contractRoles" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ipas.com/contractRoles">
+<xs:element name="contractRolesRequest">
+<xs:complexType>
+   <xs:sequence>
+      <xs:element name="contractRoles" type="tns:contractRolesRequestType" minOccurs="1" maxOccurs="1"/>
+   </xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="contractRolesResponse">
+<xs:complexType>
+   <xs:sequence>
+      <xs:element name="contractRoles" type="tns:contractRolesResponseType" minOccurs="0" maxOccurs="unbounded"/>
+   </xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="contractRolesRequestType">
+	<xs:sequence>
+	<xs:element type="xs:string" name="contractNumber"/>
+	<xs:element type="xs:string" name="statutoryCompany"/>
+	</xs:sequence>
+</xs:complexType>
+<xs:complexType name="contractRolesResponseType">
+<xs:sequence>
+  <xs:element type="xs:string" name="contractNumber"/>
+  <xs:element type="xs:string" name="adminSystemCode"/>
+  <xs:element type="xs:string" name="roleCode"/>
+  <xs:element type="xs:string" name="clientType"/>
+  <xs:element type="xs:string" name="clientName"/>
+  <xs:element type="xs:string" name="clientDesignation"/>
+  <xs:element type="xs:string" name="rolePercent"/>
+  <xs:element type="xs:string" name="clientTAXID"/>
+  <xs:element type="xs:string" name="relationToInsured"/>
+  <xs:element type="xs:string" name="clientDOB"/>
+  <xs:element type="xs:string" name="asigneeType"/>
+  <xs:element type="xs:string" name="assignmentEffectiveDate"/>
+  <xs:element type="xs:string" name="beneficiaryDescription"/>
+</xs:sequence>
+</xs:complexType>
+
+</xs:schema>
