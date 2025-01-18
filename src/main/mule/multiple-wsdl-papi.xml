@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit-soap="http://www.mulesoft.org/schema/mule/apikit-soap" xmlns:batch="http://www.mulesoft.org/schema/mule/ee/batch" xmlns:bti="http://www.mulesoft.org/schema/mule/ee/bti" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:http-policy="http://www.mulesoft.org/schema/mule/mule-http" xmlns:kryo="http://www.mulesoft.org/schema/mule/kryo" xmlns:module="http://www.mulesoft.org/schema/mule/module" xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/apikit-soap http://www.mulesoft.org/schema/mule/apikit-soap/current/mule-apikit-soap.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
     <flow name="api-main">
-        <http:listener path="/soap/*" config-ref="api-httpListenerConfig">
+<!-- [STUDIO:"Listener"]        <http:listener path="/soap/*" config-ref="api-httpListenerConfig">
             <http:response statusCode="#[attributes.additionalTransportData.statusCode default 200]">
                 <http:headers><![CDATA[#[attributes.protocolHeaders default {}]]]>
                 </http:headers>
@@ -12,7 +12,7 @@
                 <http:headers><![CDATA[#[attributes.protocolHeaders default {}]]]>
                 </http:headers>
             </http:error-response>
-        </http:listener>
+        </http:listener> [STUDIO] -->
         <choice>
             <when expression="#[attributes.headers['SOAPAction'] contains 'calculator']">
                 <apikit-soap:router config-ref="soapkit-config-calculator" doc:name="SOAP Router Calculator">
@@ -191,7 +191,7 @@ p("wsdl."++ substringAfterLast(vars.uriParameter,"/") ++ ".location")]]>
             </otherwise>
         </choice>
     </flow>
-    <flow doc:id="4ee0071b-36f8-4b47-aa6c-6336eebc1680" name="Add:\soapkit-config-common">
+   	<flow doc:id="4ee0071b-36f8-4b47-aa6c-6336eebc1680" name="Add:\soapkit-config-common">
         <ee:transform>
             <ee:message>
                 <ee:set-payload>
@@ -261,4 +261,21 @@ ns hel http://example.com/helloworld
             </ee:message>
         </ee:transform>
     </flow>
+    
+    <flow name="multiple-wsdl-papiFlow" doc:id="1bcc59c3-9a87-4b4d-9546-56ee77f75c28" >
+<!-- [STUDIO:"Listener"]		<http:listener doc:name="Listener" doc:id="4d2159be-135e-468a-948e-6b7d205b74b3" config-ref="HTTP_Listener_config-rest" path="/restAPI"/> [STUDIO] -->
+		<ee:transform doc:name="Transform Message" doc:id="0186831a-83e0-4b78-87d7-4e046b5d72ca" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"status" : "Success",
+	"message" : "able to call rest listener"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="2a7003da-d97d-49fc-b9f5-ea0683e05170" message='#["Able to call rest listener"]'/>
+	</flow>
+    
 </mule>
