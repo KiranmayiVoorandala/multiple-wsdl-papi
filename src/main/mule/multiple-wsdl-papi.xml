@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit-soap="http://www.mulesoft.org/schema/mule/apikit-soap" xmlns:batch="http://www.mulesoft.org/schema/mule/ee/batch" xmlns:bti="http://www.mulesoft.org/schema/mule/ee/bti" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:http-policy="http://www.mulesoft.org/schema/mule/mule-http" xmlns:kryo="http://www.mulesoft.org/schema/mule/kryo" xmlns:module="http://www.mulesoft.org/schema/mule/module" xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/apikit-soap http://www.mulesoft.org/schema/mule/apikit-soap/current/mule-apikit-soap.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
     <flow name="api-main">
-<!-- [STUDIO:"Listener"]        <http:listener path="/soap/*" config-ref="api-httpListenerConfig">
+        <http:listener path="/api/v1/*" config-ref="api-httpListenerConfig">
             <http:response statusCode="#[attributes.additionalTransportData.statusCode default 200]">
                 <http:headers><![CDATA[#[attributes.protocolHeaders default {}]]]>
                 </http:headers>
@@ -12,7 +12,7 @@
                 <http:headers><![CDATA[#[attributes.protocolHeaders default {}]]]>
                 </http:headers>
             </http:error-response>
-        </http:listener> [STUDIO] -->
+        </http:listener>
         <choice>
             <when expression="#[attributes.headers['SOAPAction'] contains 'calculator']">
                 <apikit-soap:router config-ref="soapkit-config-calculator" doc:name="SOAP Router Calculator">
@@ -96,8 +96,7 @@ ns cal http://example.com/calculator
     <flow doc:id="13dbb354-5a12-49fe-8aa3-dcd0b75cafa9" name="sayHello:\soapkit-config-helloworld">
         <ee:transform>
             <ee:message>
-                <ee:set-payload>
-                    <![CDATA[%dw 2.0
+                <ee:set-payload><![CDATA[%dw 2.0
 output application/xml
 ns soapenv http://schemas.xmlsoap.org/soap/envelope
 ns hel http://example.com/helloworld
@@ -105,7 +104,8 @@ ns hel http://example.com/helloworld
 {
     soapenv#Body: {
         hel#sayHelloResponse: {
-            greeting: payload.body.sayHelloRequest.name default ""
+            greeting: payload.body.sayHelloRequest.name default "",
+            flowName: "SOAP Action flow"
         }
     }
 }
@@ -124,7 +124,7 @@ ns hel http://example.com/helloworld
         </ee:transform>
     </flow>
     <flow name="serve-dynamic-wsdl">
-        <http:listener config-ref="wsdl-httpListenerConfig" path="/api/*">
+        <http:listener config-ref="wsdl-httpListenerConfig" path="/api/v2/*">
             <http:response statusCode="#[vars.httpStatus default 200]"/>
             <http:error-response statusCode="#[vars.httpStatus default 500]"/>
         </http:listener>
@@ -163,7 +163,9 @@ p("wsdl."++ substringAfterLast(vars.uriParameter,"/") ++ ".location")]]>
                 </ee:set-variable>
             </ee:variables>
         </ee:transform>
-        <choice>
+        <logger level="INFO" doc:name="uriParameter Logger" doc:id="1a2eee6d-5bb3-46a0-aacc-eb842c9d16fc" message="maskedRequestPath coming #[vars.uriParameter] with WSDL service #[vars.serviceName] with WSDL Port #[vars.portName] with WSDL location #[vars.wsdlLocation]"/>
+		<logger level="DEBUG" doc:name="uriParameter Logger DEBUG" doc:id="9601b630-6273-4413-956b-d05bd3c012fd" message="maskedRequestPath coming #[vars.uriParameter] with WSDL service #[vars.serviceName] with WSDL Port #[vars.portName] with WSDL location #[vars.wsdlLocation]" />
+		<choice>
             <when expression="#[(!isEmpty(vars.serviceName) and !isEmpty(vars.portName)and !isEmpty(vars.wsdlLocation))]">
                 <apikit-soap:router config-ref="soapkit-config-common" doc:id="d0d3182d-ea78-4f5e-b6d2-8e5115457dc5" doc:name="SOAP Router coomon">
                     <apikit-soap:attributes>#[%dw 2.0
@@ -179,7 +181,7 @@ p("wsdl."++ substringAfterLast(vars.uriParameter,"/") ++ ".location")]]>
             <otherwise>
                 <ee:transform doc:name="404-WSDL not found">
                     <ee:message>
-                        <ee:set-payload><![CDATA["WSDL not found for " ++ attributes.maskedRequestPath default ""]]>
+                        <ee:set-payload><![CDATA["WSDL not found for the uriParameter " ++ attributes.maskedRequestPath default ""]]>
                         </ee:set-payload>
                     </ee:message>
                     <ee:variables>
@@ -244,8 +246,7 @@ ns cal http://example.com/calculator
     <flow doc:id="d5ba5006-828e-4e46-a622-fec0d4077578" name="sayHello:\soapkit-config-common">
         <ee:transform>
             <ee:message>
-                <ee:set-payload>
-                    <![CDATA[%dw 2.0
+                <ee:set-payload><![CDATA[%dw 2.0
 output application/xml
 ns soapenv http://schemas.xmlsoap.org/soap/envelope
 ns hel http://example.com/helloworld
@@ -253,7 +254,8 @@ ns hel http://example.com/helloworld
 {
     soapenv#Body: {
         hel#sayHelloResponse: {
-            greeting: payload.body.sayHelloRequest.name default ""
+            greeting: payload.body.sayHelloRequest.name default "",
+            flow : "uriParameter Flow"
         }
     }
 }]]>
@@ -263,7 +265,7 @@ ns hel http://example.com/helloworld
     </flow>
     
     <flow name="multiple-wsdl-papiFlow" doc:id="1bcc59c3-9a87-4b4d-9546-56ee77f75c28" >
-<!-- [STUDIO:"Listener"]		<http:listener doc:name="Listener" doc:id="4d2159be-135e-468a-948e-6b7d205b74b3" config-ref="HTTP_Listener_config-rest" path="/restAPI"/> [STUDIO] -->
+		<http:listener doc:name="Listener" doc:id="4d2159be-135e-468a-948e-6b7d205b74b3" config-ref="HTTP_Listener_config-rest" path="/api/v3/*"/>
 		<ee:transform doc:name="Transform Message" doc:id="0186831a-83e0-4b78-87d7-4e046b5d72ca" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0

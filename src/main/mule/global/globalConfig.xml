@@ -21,11 +21,11 @@ http://www.mulesoft.org/schema/mule/apikit-soap http://www.mulesoft.org/schema/m
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
 	
 	<http:listener-config name="wsdl-httpListenerConfig" doc:name="HTTP Listener config" doc:id="1062f768-1eed-41db-93d0-692ced145f15" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
+		<http:listener-connection host="0.0.0.0" port="${api.http.port2}" />
 	</http:listener-config>
-	<!-- <http:listener-config name="api-httpListenerConfig">
-        <http:listener-connection host="0.0.0.0" port="0"/>
-    </http:listener-config> -->
+	<http:listener-config name="api-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="${api.http.port1}"/>
+    </http:listener-config> 
     <apikit-soap:config name="soapkit-config-calculator" port="CalculatorPort" service="CalculatorService" wsdlLocation="api\calculator.wsdl"/>
     <apikit-soap:config name="soapkit-config-helloworld" port="HelloWorldPort" service="HelloWorldService" wsdlLocation="api\helloworld.wsdl"/>
 	<apikit-soap:config name="soapkit-config-common" service="#[vars.serviceName]" port="#[vars.portName]" doc:name="APIKit for SOAP Configuration" doc:id="48b87a53-f098-4870-bb27-eb76b898d8b4" wsdlLocation="#[vars.wsdlLocation]" />
@@ -33,8 +33,8 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	<configuration-properties doc:name="Configuration properties" doc:id="7acf611b-1b4c-43d1-8277-c92fbf110c08" file="config/${runtime.env}.properties" />
 	<apikit-soap:config name="APIKit_for_SOAP_Configuration-ref" service="HelloWorldService" port="HelloWorldPort" doc:name="APIKit for SOAP Configuration" doc:id="b3b5bd5a-325a-42c0-95ca-73a815b82022" wsdlLocation="api\helloworld.wsdl" />
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="7c54a6e4-d0eb-412e-b4a7-4a066e79ff32" file="config/secure-${runtime.env}.properties" key="runtime.encryption.key" />
-	<!-- <http:listener-config name="HTTP_Listener_config-rest" doc:name="HTTP Listener config" doc:id="49c45d52-0e9b-410f-ae2a-839a5dbee89a" >
-		<http:listener-connection host="0.0.0.0" port="0" />
-	</http:listener-config> -->
+	<http:listener-config name="HTTP_Listener_config-rest" doc:name="HTTP Listener config" doc:id="49c45d52-0e9b-410f-ae2a-839a5dbee89a" >
+		<http:listener-connection host="0.0.0.0" port="${api.http.port3}" />
+	</http:listener-config>
     
 </mule>
